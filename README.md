@@ -12,6 +12,16 @@ A Java CLI tool that reads raw test execution results from JSON and prints a con
 - Java 17+
 - Maven 3.8+
 
+## 30-Second Quick Start
+```bash
+git clone https://github.com/mayowa2133/test-suite-health-reporter.git
+cd test-suite-health-reporter
+java -version
+mvn -version
+mvn clean package
+java -jar target/test-health-cli-reporter-1.0.0-all.jar result.json
+```
+
 ## Build
 ```bash
 mvn clean package
