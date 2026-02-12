@@ -65,6 +65,31 @@ It includes:
 Repository URL configured in the job DSL:
 - `https://github.com/mayowa2133/test-suite-health-reporter.git`
 
+## Jenkins Prerequisites (Evaluator Checklist)
+- Jenkins controller (2.x)
+- Plugins installed:
+  - `job-dsl`
+  - `git`
+  - `timestamper`
+  - `build-timeout`
+- Jenkins executor environment has:
+  - Java 17+
+  - Maven 3.8+
+  - network access to GitHub and Maven Central
+
+## How To Evaluate Jenkins Requirements
+1. In Jenkins, create a seed job (Freestyle is fine).
+2. Add a **Process Job DSLs** build step and set script path to `jenkins/test-health-job.groovy`.
+3. Run the seed job and confirm job `test-health-cli-reporter` is created.
+4. Open that generated job and verify:
+   - cron is `TZ=America/Los_Angeles` + `0 9 * * *`
+   - parameter `RESULT_FILE` exists
+   - timestamps wrapper is enabled
+   - absolute timeout is 10 minutes
+   - git URL is `https://github.com/mayowa2133/test-suite-health-reporter.git`
+5. Build `test-health-cli-reporter` with `RESULT_FILE=result.json`.
+6. Confirm the console prints the Test Health report (total tests, pass/fail %, failed test names).
+
 ## Suggested Infrastructure Improvement (If More Time)
 I would implement a **Test Health History pipeline** using **S3 + Athena + Grafana**:
 
